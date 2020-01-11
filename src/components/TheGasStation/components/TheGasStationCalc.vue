@@ -1,33 +1,23 @@
-<template>
-    <div class="the-gas-station-calc-body-calc the-gas-station-calc-petrol-calc">
-        <div class="the-gas-station-calc-body-calc__left">
-            <div class="the-gas-station-calc-description the-gas-station-calc-ml-0 the-gas-station-calc-w-100">
-                <div class="the-gas-station-calc-description__the-gas-station-title"
-                     :class="active_classes.color_class">{{active_classes.title}}
-                </div>
-                <div class="the-gas-station-calc-description__text">Выберите количество литров для заправки.
-                    Исользуйте ползунок, после нажмите <span :class="active_classes.color_class">продолжить</span>,
-                    чтобы перейти к оплате.
-                </div>
-            </div>
-            <range-slider
+<template lang="pug">
+    div(class="the-gas-station-calc-body-calc the-gas-station-calc-petrol-calc")
+        div(class="the-gas-station-calc-body-calc__left")
+            div(class="the-gas-station-calc-description the-gas-station-calc-ml-0 the-gas-station-calc-w-100")
+                div(class="the-gas-station-calc-description__the-gas-station-title"
+                     :class="active_classes.color_class") {{active_classes.title}}
+                div(class="the-gas-station-calc-description__text")
+                    | Выберите количество литров для заправки. Исользуйте ползунок, после нажмите
+                    span(:class="active_classes.color_class")  продолжить
+                    |, чтобы перейти к оплате.
+            range-slider(
                     class="the-gas-station-calc-slider"
                     :min="min_liters"
                     :max="max_liters"
                     step="1"
                     v-model="value"
-                    @change="changeSlider"
-            >
-            </range-slider>
-            <span class="the-gas-station-calc-petrol-calc__price" :class="active_classes.color_class">К оплате: $ {{ amount }}</span>
-        </div>
-        <div class="the-gas-station-calc-body-calc__right">
-            <TheGasStationProgressRing
-                    :count_litters=this.value
-            />
-        </div>
-    </div>
-
+                    @change="changeSlider")
+            span(class="the-gas-station-calc-petrol-calc__price" :class="active_classes.color_class") К оплате: $ {{ amount }}</span>
+        div(class="the-gas-station-calc-body-calc__right")
+            TheGasStationProgressRing(v-bind:count_litters="value")
 </template>
 
 <script>

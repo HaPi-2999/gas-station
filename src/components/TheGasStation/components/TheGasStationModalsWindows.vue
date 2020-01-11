@@ -1,32 +1,24 @@
-<template>
-    <div id="the-gas-station-modals-windows-modal-window" @click="setStopPropagation($event)">
-        <input type="text" v-model="money">
-        <div class="the-gas-station-modals-windows-modal-window__header">
-            ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
-        </div>
-        <div class="the-gas-station-modals-windows-modal-window__content" v-if="competition.type_payment">
-            <div class="the-gas-station-modals-windows-modal-window__button the-gas-station-modals-windows-btn-cash"
-                 id="btn-cash"
-                 @click="setActiveContent">НАЛИЧНЫЙ РАСЧЁТ
-            </div>
-            <div class="the-gas-station-modals-windows-modal-window__button the-gas-station-modals-windows-btn-bank-card"
-                 id="btn-bank-card"
-                 @click="setActiveContent">БАНКОВСКАЯ КАРТА
-            </div>
-        </div>
-        <div class="the-gas-station-modals-windows-modal-window__content" v-if="competition.success">
-            <img src="../assets/payment-success.png" alt="">
-            <p class="the-gas-station-modals-windows-text-success">Транзакция прошла успешно.<br>
-                Дождитесь окончания заправки.</p>
-        </div>
-        <div class="the-gas-station-modals-windows-modal-window__content" v-if="competition.fail">
-            <img src="../assets/payment-error.png" alt="">
-            <p class="the-gas-station-modals-windows-text-fail">Не достаточно средств на балансе</p>
-        </div>
-        <div class="the-gas-station-modals-windows-modal-window__footer">
-            <img src="../assets/footer-img.png" alt="">
-        </div>
-    </div>
+<template lang="pug">
+    div(id="the-gas-station-modals-windows-modal-window" @click="setStopPropagation($event)")
+        input(type="text" v-model="money")
+        div(class="the-gas-station-modals-windows-modal-window__header") ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
+        div(class="the-gas-station-modals-windows-modal-window__content" v-if="competition.type_payment")
+            div(class="the-gas-station-modals-windows-modal-window__button the-gas-station-modals-windows-btn-cash"
+                id="btn-cash"
+                @click="setActiveContent") НАЛИЧНЫЙ РАСЧЁТ
+            div(class="the-gas-station-modals-windows-modal-window__button the-gas-station-modals-windows-btn-bank-card"
+                id="btn-bank-card"
+                @click="setActiveContent") БАНКОВСКАЯ КАРТА
+        div(class="the-gas-station-modals-windows-modal-window__content" v-if="competition.success")
+            img(src="../assets/payment-success.png" alt="")
+            p(class="the-gas-station-modals-windows-text-success") Транзакция прошла успешно.
+                br
+                | Дождитесь окончания заправки.
+        div(class="the-gas-station-modals-windows-modal-window__content" v-if="competition.fail")
+            img(src="../assets/payment-error.png" alt="")
+            p(class="the-gas-station-modals-windows-text-fail") Не достаточно средств на балансе
+        div(class="the-gas-station-modals-windows-modal-window__footer")
+            img(src="../assets/footer-img.png" alt="")
 </template>
 
 <script>
@@ -50,7 +42,7 @@
         },
         methods: {
             setStopPropagation(event) {
-                                                        event.stopPropagation();
+                event.stopPropagation();
             },
             setActiveContent() {
                 this.isEnoughMoney();

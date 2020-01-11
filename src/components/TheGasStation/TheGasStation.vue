@@ -1,71 +1,55 @@
-<template>
-    <div>
-        <TheGasStationModalsWindows :amount="amount"/>
-        <div id="the-gas-station-price-calc" class="the-gas-station-price-calc">
-            <div class="the-gas-station-price-calc__header">
-                <img src="././assets/logo.png" alt="logo">
-                <div class="the-gas-station-header-bottom-lines">
-                    <div class="the-gas-station-white-header-line"></div>
-                    <div class="the-gas-station-red-header-line"></div>
-                    <div class="the-gas-station-white-header-line"></div>
-                </div>
-            </div>
-            <div class="the-gas-station-price-calc__content">
-                <div class="the-gas-station-title">Выберите тип бензина:</div>
-                <div class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
+<template lang="pug">
+    div
+        TheGasStationModalsWindows(:amount="amount")
+        div(id="the-gas-station-price-calc" class="the-gas-station-price-calc")
+            div(class="the-gas-station-price-calc__header")
+                img(src="./assets/logo.png" alt="logo")
+                div(class="the-gas-station-header-bottom-lines")
+                    div(class="the-gas-station-white-header-line")
+                    div(class="the-gas-station-red-header-line")
+                    div(class="the-gas-station-white-header-line")
+            div(class="the-gas-station-price-calc__content")
+                div(class="the-gas-station-title") Выберите тип бензина:
+                div(class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
                      @click="setActive('unleaded')"
-                     :class="{'active': active.unleaded}">
-                    <div class="the-gas-station-petrol-logo">
-                        <img src="./assets/fuel-unleaded.svg" alt="">
-                    </div>
-                    <div class="the-gas-station-calc-description">
-                        <div class="the-gas-station-calc-description__title unleaded">Unleaded 87</div>
-                        <div class="the-gas-station-calc-description__text">Бензин низкого качества, отсутствуют какие
-                            либо присатки.
-                            Достаточно хороший вариант для среднего класса машин.
-                        </div>
-                    </div>
-                </div>
-                <div class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
+                     :class="{'active': active.unleaded}")
+                    div(class="the-gas-station-petrol-logo")
+                        img(src="./assets/fuel-unleaded.svg" alt="")
+                    div(class="the-gas-station-calc-description")
+                        div(class="the-gas-station-calc-description__title unleaded") Unleaded 87
+                        div(class="the-gas-station-calc-description__text")
+                            | Бензин низкого качества, отсутствуют какие
+                            | либо присатки.
+                            | Достаточно хороший вариант для среднего класса машин.
+                div(class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
                      @click="setActive('performance_plus')"
-                     :class="{'active': active.performance_plus}">
-                    <div class="the-gas-station-petrol-logo">
-                        <img src="./assets/fuel-perfomance-plus.svg" alt="">
-                    </div>
-                    <div class="the-gas-station-calc-description">
-                        <div class="the-gas-station-calc-description__title performance-plus">Performance Plus</div>
-                        <div class="the-gas-station-calc-description__text">Бензин среднего качества, Добавлена слабая
-                            присадка. Двигатель
-                            становится чуть мощнее, что даёт возможность передвигаться уверенее.
-                        </div>
-                    </div>
-                </div>
-                <div class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
+                     :class="{'active': active.performance_plus}")
+                    div(class="the-gas-station-petrol-logo")
+                        img(src="./assets/fuel-perfomance-plus.svg" alt="")
+                    div(class="the-gas-station-calc-description")
+                        div(class="the-gas-station-calc-description__title performance-plus") Performance Plus
+                        div(class="the-gas-station-calc-description__text")
+                            | Бензин среднего качества, Добавлена слабая
+                            | присадка. Двигатель
+                            | становится чуть мощнее, что даёт возможность передвигаться уверенее.
+                div(class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
                      @click="setActive('performance_premium')"
-                     :class="{'active': active.performance_premium}">
-                    <div class="the-gas-station-petrol-logo">
-                        <img src="./assets/fuel-perfomance-premium.svg" alt="">
-                    </div>
-                    <div class="the-gas-station-calc-description">
-                        <div class="the-gas-station-calc-description__title performance-premium">Performance PREMIUM
-                        </div>
-                        <div class="the-gas-station-calc-description__text">Бензин высокого качества, есть особый состав
-                            присадки, который
-                            увеличивает мощность двигателя в разы. Минимальный износ двигателя.
-                        </div>
-                    </div>
-                </div>
-                <TheGasStationCalc
+                     :class="{'active': active.performance_premium}")
+                    div(class="the-gas-station-petrol-logo")
+                        img(src="./assets/fuel-perfomance-premium.svg" alt="")
+                    div(class="the-gas-station-calc-description")
+                        div(class="the-gas-station-calc-description__title performance-premium") Performance PREMIUM
+                        div(class="the-gas-station-calc-description__text")
+                            | Бензин высокого качества, есть особый состав
+                            | присадки, который
+                            | увеличивает мощность двигателя в разы. Минимальный износ двигателя.
+                TheGasStationCalc(
                         :max_liters="40"
                         :min_liters="20"
                         :active_classes="color_and_background"
-                        v-on:setAmount="setAmount"/>
-            </div>
-            <div class="the-gas-station-button" id="proceed" :class="color_and_background.background_class"
-                 @click="proceed">Продолжить
-            </div>
-        </div>
-    </div>
+                        v-on:setAmount="setAmount")
+            div(class="the-gas-station-button" id="proceed" :class="color_and_background.background_class"
+                 @click="proceed") Продолжить
 </template>
 
 <script>

@@ -1,13 +1,12 @@
-<template>
-    <div class="the-gas-station-progress-ring">
-        <svg width="6.25rem" height="6.25rem">
-            <circle stroke="#42505f"
+<template lang="pug">
+    div(class="the-gas-station-progress-ring")
+        svg(width="6.25rem" height="6.25rem")
+            circle(stroke="#42505f"
                     class="the-gas-station-progress-ring-circle"
                     fill="transparent"
                     :stroke-width="stroke"
-                    :r="normalizedRadius"
-            />
-            <circle
+                    :r="normalizedRadius")
+            circle(
                     class="the-gas-station-progress-ring-circle"
                     id="progress-ring"
                     stroke="#5D9F23"
@@ -16,11 +15,8 @@
                     style="border-radius: 3px;"
                     :style="{ strokeDashoffset }"
                     :stroke-width="stroke"
-                    :r="normalizedRadius"
-            />
-        </svg>
-        <div class="the-gas-station-progress-ring-text-in-circle ">{{count_litters + 'Л'}}</div>
-    </div>
+                    :r="normalizedRadius")
+        div(class="the-gas-station-progress-ring-text-in-circle") {{count_litters + 'Л'}}
 </template>
 
 <script>
