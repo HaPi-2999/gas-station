@@ -1,14 +1,13 @@
 <template lang="pug">
-    div(class="the-gas-station-progress-ring")
+    div.the-gas-station-progress-ring
         svg(width="6.25rem" height="6.25rem")
             circle(stroke="#42505f"
                     class="the-gas-station-progress-ring-circle"
                     fill="transparent"
                     :stroke-width="stroke"
                     :r="normalizedRadius")
-            circle(
-                    class="the-gas-station-progress-ring-circle"
-                    id="progress-ring"
+            circle.the-gas-station-progress-ring-circle(
+                    ref="progress_ring"
                     stroke="#5D9F23"
                     fill="transparent"
                     :stroke-dasharray="circumference + ' ' + circumference"
@@ -16,13 +15,14 @@
                     :style="{ strokeDashoffset }"
                     :stroke-width="stroke"
                     :r="normalizedRadius")
-        div(class="the-gas-station-progress-ring-text-in-circle") {{count_litters + 'Л'}}
+        div.the-gas-station-progress-ring-text-in-circle {{count_litters + 'Л'}}
 </template>
 
 <script>
     export default {
         name: "TheGasStationProgressRing",
         props: {
+            active_classes: Object,
             count_litters: Number,
         },
         data() {
@@ -42,6 +42,30 @@
             strokeDashoffset() {
                 let progress = this.count_litters * 100 / 40;
                 return this.circumference - progress / 100 * this.circumference;
+            },
+        },
+        watch: {
+          active_classes() {
+              this.setSpinnerClasses();
+          }
+        },
+        methods: {
+            setSpinnerClasses() {
+                const SPINNER_CLASSES = [
+                    'the-gas-station-stroke-unleaded',
+                    'the-gas-station-stroke-performance-plus',
+                    'the-gas-station-stroke-performance-premium'
+                ];
+
+                let spinner_item = this.$refs.progress_ring;
+
+                SPINNER_CLASSES.forEach(cl => {
+                    if (spinner_item.classList.contains(cl)) {
+                        spinner_item.classList.remove(cl);
+                    }
+                });
+
+                spinner_item.classList.add(this.active_classes.stroke_color);
             },
         }
     }

@@ -1,27 +1,29 @@
 <template lang="pug">
-    div(id="the-gas-station-modals-windows-modal-window" @click="setStopPropagation($event)")
+    div#the-gas-station-modals-windows-modal-window(v-click-outside="onClickOutside" ref="modal_window")
         input(type="text" v-model="money")
-        div(class="the-gas-station-modals-windows-modal-window__header") ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
-        div(class="the-gas-station-modals-windows-modal-window__content" v-if="competition.type_payment")
-            div(class="the-gas-station-modals-windows-modal-window__button the-gas-station-modals-windows-btn-cash"
-                id="btn-cash"
-                @click="setActiveContent") НАЛИЧНЫЙ РАСЧЁТ
-            div(class="the-gas-station-modals-windows-modal-window__button the-gas-station-modals-windows-btn-bank-card"
-                id="btn-bank-card"
-                @click="setActiveContent") БАНКОВСКАЯ КАРТА
-        div(class="the-gas-station-modals-windows-modal-window__content" v-if="competition.success")
+        div.the-gas-station-modals-windows-modal-window__header ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
+        div.the-gas-station-modals-windows-modal-window__content(v-if="competition.type_payment")
+            div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows-btn-cash
+                #btn-cash(@click="setActiveContent") НАЛИЧНЫЙ РАСЧЁТ
+            div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows-btn-bank-card
+                #btn-bank-card(
+                    @click="setActiveContent") БАНКОВСКАЯ КАРТА
+        div.the-gas-station-modals-windows-modal-window__content(v-if="competition.success")
             img(src="../assets/payment-success.png" alt="")
-            p(class="the-gas-station-modals-windows-text-success") Транзакция прошла успешно.
+            p.the-gas-station-modals-windows-text-success Транзакция прошла успешно.
                 br
                 | Дождитесь окончания заправки.
-        div(class="the-gas-station-modals-windows-modal-window__content" v-if="competition.fail")
+        div.the-gas-station-modals-windows-modal-window__content(v-if="competition.fail")
             img(src="../assets/payment-error.png" alt="")
-            p(class="the-gas-station-modals-windows-text-fail") Не достаточно средств на балансе
-        div(class="the-gas-station-modals-windows-modal-window__footer")
+            p.the-gas-station-modals-windows-text-fail Не достаточно средств на балансе
+        div.the-gas-station-modals-windows-modal-window__footer
             img(src="../assets/footer-img.png" alt="")
 </template>
 
 <script>
+    import vClickOutside from 'v-click-outside'
+
+
     export default {
         name: "TheGasStationTypePayment",
         props: {
@@ -29,6 +31,9 @@
                 default: 0,
                 type: Number
             }
+        },
+        directives: {
+            clickOutside: vClickOutside.directive
         },
         data() {
             return {
@@ -41,9 +46,6 @@
             }
         },
         methods: {
-            setStopPropagation(event) {
-                event.stopPropagation();
-            },
             setActiveContent() {
                 this.isEnoughMoney();
             },
@@ -58,11 +60,23 @@
 
                 return false;
             },
+            getData() {
+                return {
+                    modal_window: this.$refs.modal_window
+                };
+            },
+            onClickOutside() {
+                let elem = this.$refs.modal_window,
+                    mainWindow = document.getElementById('the-gas-station-price-calc');
+
+                mainWindow.classList.remove('the-gas-station-blur');
+                elem.classList.remove('the-gas-station-modal-active');
+            },
             closeAllModal() {
                 for (let el in this.competition) {
                     this.competition[el] = false;
                 }
-            }
+            },
         }
     }
 </script>

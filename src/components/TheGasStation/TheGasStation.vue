@@ -1,60 +1,61 @@
 <template lang="pug">
     div
-        TheGasStationModalsWindows(:amount="amount")
-        div(id="the-gas-station-price-calc" class="the-gas-station-price-calc")
-            div(class="the-gas-station-price-calc__header")
+        TheGasStationModalsWindows(:amount="amount" ref="modal_window")
+        div#the-gas-station-price-calc.the-gas-station-price-calc(ref="price_calc")
+            div.the-gas-station-price-calc__header
                 img(src="./assets/logo.png" alt="logo")
-                div(class="the-gas-station-header-bottom-lines")
-                    div(class="the-gas-station-white-header-line")
-                    div(class="the-gas-station-red-header-line")
-                    div(class="the-gas-station-white-header-line")
-            div(class="the-gas-station-price-calc__content")
-                div(class="the-gas-station-title") Выберите тип бензина:
-                div(class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
-                     @click="setActive('unleaded')"
-                     :class="{'active': active.unleaded}")
-                    div(class="the-gas-station-petrol-logo")
+                div.the-gas-station-header-bottom-lines
+                    div.the-gas-station-white-header-line
+                    div.the-gas-station-red-header-line
+                    div.the-gas-station-white-header-line
+            div.the-gas-station-price-calc__content
+                div.the-gas-station-title Выберите тип бензина:
+                div.the-gas-station-petrol-type.the-gas-station-calc-petrol-calc(
+                    @click="setActive('unleaded')"
+                    :class="{'active': active === 'unleaded'}")
+                    div.the-gas-station-petrol-logo
                         img(src="./assets/fuel-unleaded.svg" alt="")
-                    div(class="the-gas-station-calc-description")
-                        div(class="the-gas-station-calc-description__title unleaded") Unleaded 87
-                        div(class="the-gas-station-calc-description__text")
+                    div.the-gas-station-calc-description
+                        div.the-gas-station-calc-description__title.unleaded Unleaded 87
+                        div.the-gas-station-calc-description__text
                             | Бензин низкого качества, отсутствуют какие
                             | либо присатки.
                             | Достаточно хороший вариант для среднего класса машин.
-                div(class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
-                     @click="setActive('performance_plus')"
-                     :class="{'active': active.performance_plus}")
-                    div(class="the-gas-station-petrol-logo")
+                div.the-gas-station-petrol-type.the-gas-station-calc-petrol-calc(
+                    @click="setActive('performance_plus')"
+                    :class="{'active': active === 'performance_plus'}")
+                    div.the-gas-station-petrol-logo
                         img(src="./assets/fuel-perfomance-plus.svg" alt="")
-                    div(class="the-gas-station-calc-description")
-                        div(class="the-gas-station-calc-description__title performance-plus") Performance Plus
-                        div(class="the-gas-station-calc-description__text")
+                    div.the-gas-station-calc-description
+                        div.the-gas-station-calc-description__title.performance-plus Performance Plus
+                        div.the-gas-station-calc-description__text
                             | Бензин среднего качества, Добавлена слабая
                             | присадка. Двигатель
                             | становится чуть мощнее, что даёт возможность передвигаться уверенее.
-                div(class="the-gas-station-petrol-type the-gas-station-calc-petrol-calc"
-                     @click="setActive('performance_premium')"
-                     :class="{'active': active.performance_premium}")
-                    div(class="the-gas-station-petrol-logo")
+                div.the-gas-station-petrol-type.the-gas-station-calc-petrol-calc(
+                    @click="setActive('performance_premium')"
+                    :class="{'active': active === 'performance_premium'}")
+                    div.the-gas-station-petrol-logo
                         img(src="./assets/fuel-perfomance-premium.svg" alt="")
-                    div(class="the-gas-station-calc-description")
-                        div(class="the-gas-station-calc-description__title performance-premium") Performance PREMIUM
-                        div(class="the-gas-station-calc-description__text")
+                    div.the-gas-station-calc-description
+                        div.the-gas-station-calc-description__title.performance-premium Performance PREMIUM
+                        div.the-gas-station-calc-description__text
                             | Бензин высокого качества, есть особый состав
                             | присадки, который
                             | увеличивает мощность двигателя в разы. Минимальный износ двигателя.
                 TheGasStationCalc(
-                        :max_liters="40"
-                        :min_liters="20"
-                        :active_classes="color_and_background"
-                        v-on:setAmount="setAmount")
-            div(class="the-gas-station-button" id="proceed" :class="color_and_background.background_class"
-                 @click="proceed") Продолжить
+                    :max_liters="40"
+                    :min_liters="20"
+                    :active_classes="color_and_background"
+                    v-on:setAmount="setAmount")
+            div.the-gas-station-button#proceed(:class="color_and_background.background_class"
+                @click="proceed") Продолжить
 </template>
 
 <script>
     import TheGasStationCalc from "./components/TheGasStationCalc";
     import TheGasStationModalsWindows from "./components/TheGasStationModalsWindows";
+    import vClickOutside from 'v-click-outside'
 
     const CLASSES = [
         'the-gas-station-bg-unleaded',
@@ -74,13 +75,12 @@
             TheGasStationCalc,
             TheGasStationModalsWindows
         },
+        directives: {
+            clickOutside: vClickOutside.directive
+        },
         data() {
             return {
-                active: {
-                    unleaded: true,
-                    performance_plus: false,
-                    performance_premium: false
-                },
+                active: 'unleaded',
                 show_modals_window: false,
                 color_and_background: {},
                 amount: 2
@@ -88,24 +88,13 @@
         },
         methods: {
             setActive(key) {
-                for (let k in this.active) {
-                    this.active[k] = false;
-                }
-
-                this.active[key] = true;
+                this.active = key;
 
                 this.color_and_background = this.getColorAndBackground();
                 this.setStyles();
             },
             getColorAndBackground() {
-                let key = null;
-                for (let k in this.active) {
-                    if (this.active[k] === true) {
-                        key = k;
-                    }
-                }
-
-                switch (key) {
+                switch (this.active) {
                     case 'unleaded':
                         return {
                             title: 'Unleaded 87',
@@ -140,25 +129,6 @@
             },
             setStyles() {
                 this.setSliderClasses();
-                this.setSpinnerClasses();
-            },
-            setSpinnerClasses() {
-                const SPINNER_CLASSES = [
-                    'the-gas-station-stroke-unleaded',
-                    'the-gas-station-stroke-performance-plus',
-                    'the-gas-station-stroke-performance-premium'
-                ];
-
-                let spinner_item = document.getElementById('progress-ring');
-
-                SPINNER_CLASSES.forEach(cl => {
-                    if (spinner_item.classList.contains(cl)) {
-                        spinner_item.classList.remove(cl);
-                    }
-                });
-
-                spinner_item.classList.add(this.color_and_background.stroke_color);
-
             },
             setSliderClasses() {
                 const SLIDER_CLASSES = [
@@ -186,33 +156,23 @@
                     item.classList.add(this.color_and_background.box_shadow_class);
                 });
             },
-
-            outsideClickListener() {
-                let elem = document.getElementById('the-gas-station-modals-windows-modal-window'),
-                    _self = this,
-                    mainWindow = document.getElementById('the-gas-station-price-calc');
-
-                if (mainWindow.classList.contains('the-gas-station-blur')) {
-                    mainWindow.classList.remove('the-gas-station-blur');
-                    elem.classList.remove('the-gas-station-modal-active');
-
-                    document.removeEventListener('click', _self.outsideClickListener);
+            stopPropagation(e) {
+                if (e.stopPropagation !== 'undefined') {
+                    e.stopPropagation();
                 }
             },
-
             proceed() {
-                let modal = document.getElementById('the-gas-station-modals-windows-modal-window'),
-                    mainWindow = document.getElementById('the-gas-station-price-calc'),
-                    _self = this,
+                let modal = this.$refs.modal_window.getData().modal_window,
+                    mainWindow = this.$refs.price_calc,
                     promise = new Promise(function (resolve) {
-                        setTimeout(function () {
-                            resolve(document.addEventListener('click', _self.outsideClickListener))
-                        }, 1)
+                        resolve(setTimeout( () => {
+                            mainWindow.classList.add('the-gas-station-blur');
+                            modal.classList.add('the-gas-station-modal-active');
+                            mainWindow.removeEventListener('click', this.stopPropagation);
+                        }, 1));
                     });
-
                 promise.then(function () {
-                    mainWindow.classList.add('the-gas-station-blur');
-                    modal.classList.add('the-gas-station-modal-active');
+                    mainWindow.addEventListener('click', this.stopPropagation)
                 });
             },
 
@@ -222,7 +182,7 @@
         },
 
         mounted() {
-            this.color_and_background = this.getColorAndBackground()
+            this.color_and_background = this.getColorAndBackground();
             this.setStyles();
         }
     }

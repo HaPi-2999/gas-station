@@ -1,23 +1,22 @@
 <template lang="pug">
-    div(class="the-gas-station-calc-body-calc the-gas-station-calc-petrol-calc")
-        div(class="the-gas-station-calc-body-calc__left")
-            div(class="the-gas-station-calc-description the-gas-station-calc-ml-0 the-gas-station-calc-w-100")
-                div(class="the-gas-station-calc-description__the-gas-station-title"
-                     :class="active_classes.color_class") {{active_classes.title}}
-                div(class="the-gas-station-calc-description__text")
+    div.the-gas-station-calc-body-calc.the-gas-station-calc-petrol-calc
+        div.the-gas-station-calc-body-calc__left
+            div.the-gas-station-calc-description.the-gas-station-calc-ml-0.the-gas-station-calc-w-100
+                div.the-gas-station-calc-description__the-gas-station-title(:class="active_classes.color_class")
+                    | {{active_classes.title}}
+                div.the-gas-station-calc-description__text
                     | Выберите количество литров для заправки. Исользуйте ползунок, после нажмите
                     span(:class="active_classes.color_class")  продолжить
-                    |, чтобы перейти к оплате.
-            range-slider(
-                    class="the-gas-station-calc-slider"
-                    :min="min_liters"
-                    :max="max_liters"
-                    step="1"
-                    v-model="value"
-                    @change="changeSlider")
-            span(class="the-gas-station-calc-petrol-calc__price" :class="active_classes.color_class") К оплате: $ {{ amount }}</span>
-        div(class="the-gas-station-calc-body-calc__right")
-            TheGasStationProgressRing(v-bind:count_litters="value")
+                    | , чтобы перейти к оплате.
+            range-slider.the-gas-station-calc-slider(
+                :min="min_liters"
+                :max="max_liters"
+                step="1"
+                v-model="value"
+                @change="changeSlider")
+            span.the-gas-station-calc-petrol-calc__price(:class="active_classes.color_class") К оплате: $ {{ amount }}</span>
+        div.the-gas-station-calc-body-calc__right
+            TheGasStationProgressRing(:count_litters="value" :active_classes="active_classes")
 </template>
 
 <script>
@@ -47,13 +46,6 @@
                 value: 0,
             }
         },
-        watch: {
-            value() {
-                if (this.value < this.min_liters) {
-                    this.value = this.min_liters;
-                }
-            }
-        },
         computed: {
             amount() {
                 let amount = this.active_classes.price_per_liter * (this.value - this.min_liters);
@@ -64,16 +56,10 @@
         methods: {
             changeSlider() {
                 this.setAmountEvent();
-                this.checkMinValue();
             },
             setAmountEvent() {
                 this.$emit('setAmount', this.amount);
             },
-            checkMinValue() {
-                if (this.value < this.min_liters) {
-                    this.value = this.min_liters;
-                }
-            }
         },
         mounted() {
             this.value = this.min_liters;
