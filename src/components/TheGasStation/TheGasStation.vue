@@ -1,6 +1,9 @@
 <template lang="pug">
     div
-        TheGasStationModalsWindows(:amount="amount" ref="modal_window")
+        TheGasStationModalsWindows(
+            :amount="amount"
+            :mainWindow="$refs.price_calc"
+            ref="modal_window")
         div#the-gas-station-price-calc.the-gas-station-price-calc(ref="price_calc")
             div.the-gas-station-price-calc__header
                 img(src="./assets/logo.png" alt="logo")
@@ -89,7 +92,6 @@
         methods: {
             setActive(key) {
                 this.active = key;
-
                 this.color_and_background = this.getColorAndBackground();
                 this.setStyles();
             },

@@ -27,6 +27,7 @@
     export default {
         name: "TheGasStationTypePayment",
         props: {
+            mainWindow: null,
             amount: {
                 default: 0,
                 type: Number
@@ -66,10 +67,9 @@
                 };
             },
             onClickOutside() {
-                let elem = this.$refs.modal_window,
-                    mainWindow = document.getElementById('the-gas-station-price-calc');
+                let elem = this.$refs.modal_window;
 
-                mainWindow.classList.remove('the-gas-station-blur');
+                this.mainWindow.classList.remove('the-gas-station-blur');
                 elem.classList.remove('the-gas-station-modal-active');
             },
             closeAllModal() {
