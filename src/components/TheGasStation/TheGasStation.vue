@@ -158,23 +158,27 @@
                     item.classList.add(this.color_and_background.box_shadow_class);
                 });
             },
-            stopPropagation(e) {
-                if (e.stopPropagation !== 'undefined') {
-                    e.stopPropagation();
+            outsideClickListener(modal, mainWindow, _self) {
+                return function () {
+                    if (mainWindow.classList.contains('the-gas-station-blur')) {
+                        mainWindow.classList.remove('the-gas-station-blur');
+                        modal.classList.remove('the-gas-station-modal-active');
+                        document.removeEventListener('click', _self.outsideClickListener);
+                    }
                 }
             },
             proceed() {
                 let modal = this.$refs.modal_window.getData().modal_window,
                     mainWindow = this.$refs.price_calc,
+                    _self = this,
                     promise = new Promise(function (resolve) {
-                        resolve(setTimeout( () => {
-                            mainWindow.classList.add('the-gas-station-blur');
-                            modal.classList.add('the-gas-station-modal-active');
-                            mainWindow.removeEventListener('click', this.stopPropagation);
-                        }, 1));
+                        setTimeout(function () {
+                            resolve(document.addEventListener('click', _self.outsideClickListener(modal, mainWindow, _self)))
+                        }, 1)
                     });
                 promise.then(function () {
-                    mainWindow.addEventListener('click', this.stopPropagation)
+                    mainWindow.classList.add('the-gas-station-blur');
+                    modal.classList.add('the-gas-station-modal-active');
                 });
             },
 

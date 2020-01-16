@@ -1,5 +1,5 @@
 <template lang="pug">
-    div#the-gas-station-modals-windows-modal-window(v-click-outside="onClickOutside" ref="modal_window")
+    div#the-gas-station-modals-windows-modal-window(@click="setStopPropagation($event)" ref="modal_window")
         input(type="text" v-model="money")
         div.the-gas-station-modals-windows-modal-window__header ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
         div.the-gas-station-modals-windows-modal-window__content(v-if="competition.type_payment")
@@ -21,8 +21,6 @@
 </template>
 
 <script>
-    import vClickOutside from 'v-click-outside'
-
 
     export default {
         name: "TheGasStationTypePayment",
@@ -32,9 +30,6 @@
                 default: 0,
                 type: Number
             }
-        },
-        directives: {
-            clickOutside: vClickOutside.directive
         },
         data() {
             return {
@@ -47,6 +42,9 @@
             }
         },
         methods: {
+            setStopPropagation(event) {
+                event.stopPropagation();
+            },
             setActiveContent() {
                 this.isEnoughMoney();
             },
@@ -65,12 +63,6 @@
                 return {
                     modal_window: this.$refs.modal_window
                 };
-            },
-            onClickOutside() {
-                let elem = this.$refs.modal_window;
-
-                this.mainWindow.classList.remove('the-gas-station-blur');
-                elem.classList.remove('the-gas-station-modal-active');
             },
             closeAllModal() {
                 for (let el in this.competition) {
