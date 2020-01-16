@@ -3,19 +3,19 @@
         input(type="text" v-model="money")
         div.the-gas-station-modals-windows-modal-window__header ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
         div.the-gas-station-modals-windows-modal-window__content(v-if="competition.type_payment")
-            div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows-btn-cash
+            div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows__btn-cash
                 #btn-cash(@click="setActiveContent") НАЛИЧНЫЙ РАСЧЁТ
-            div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows-btn-bank-card
+            div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows__btn-bank-card
                 #btn-bank-card(
                     @click="setActiveContent") БАНКОВСКАЯ КАРТА
         div.the-gas-station-modals-windows-modal-window__content(v-if="competition.success")
             img(src="../assets/payment-success.png" alt="")
-            p.the-gas-station-modals-windows-text-success Транзакция прошла успешно.
+            p.the-gas-station-modals-windows__text-success Транзакция прошла успешно.
                 br
                 | Дождитесь окончания заправки.
         div.the-gas-station-modals-windows-modal-window__content(v-if="competition.fail")
             img(src="../assets/payment-error.png" alt="")
-            p.the-gas-station-modals-windows-text-fail Не достаточно средств на балансе
+            p.the-gas-station-modals-windows__text-fail Не достаточно средств на балансе
         div.the-gas-station-modals-windows-modal-window__footer
             img(src="../assets/footer-img.png" alt="")
 </template>
@@ -89,12 +89,12 @@
     $bg-btn-cash: #1da32d;
 
 
-    .the-gas-station-modals-windows-btn-bank-card {
+    .the-gas-station-modals-windows__btn-bank-card {
         background: $bg-btn-bank-card;
         color: #192736;
     }
 
-    .the-gas-station-modals-windows-btn-cash {
+    .the-gas-station-modals-windows__btn-cash {
         color: $white;
         background: $bg-btn-cash;
         margin-bottom: 0.75rem !important;
@@ -147,7 +147,7 @@
                 border-radius: 1.0625rem;
             }
 
-            .the-gas-station-modals-windows-text-success {
+            .the-gas-station-modals-windows__text-success {
                 color: #fff;
                 font-weight: bold;
                 margin: 0.625rem 0 0;
@@ -155,7 +155,7 @@
                 font-size: 0.8125rem;
             }
 
-            .the-gas-station-modals-windows-text-fail {
+            .the-gas-station-modals-windows__text-fail {
                 color: #bc0000;
                 font-weight: bold;
                 margin-bottom: 0;

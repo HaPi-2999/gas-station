@@ -1,10 +1,10 @@
 <template lang="pug">
-    div.the-gas-station-calc-body-calc.the-gas-station-calc-petrol-calc
-        div.the-gas-station-calc-body-calc__left
-            div.the-gas-station-calc-description.the-gas-station-calc-ml-0.the-gas-station-calc-w-100
-                div.the-gas-station-calc-description__the-gas-station-title(:class="active_classes.color_class")
+    div.the-gas-station-calc__body.the-gas-station-calc-petrol-calc.the-gas-station-calc-body
+        div.the-gas-station-calc-body__part-left
+            div.the-gas-station-description.the-gas-station-calc-ml-0.the-gas-station-calc-w-100
+                div.the-gas-station-description__title(:class="active_classes.color_class")
                     | {{active_classes.title}}
-                div.the-gas-station-calc-description__text
+                div.the-gas-station-description__text
                     | Выберите количество литров для заправки. Исользуйте ползунок, после нажмите
                     span(:class="active_classes.color_class")  продолжить
                     | , чтобы перейти к оплате.
@@ -15,7 +15,7 @@
                 v-model="value"
                 @change="changeSlider")
             span.the-gas-station-calc-petrol-calc__price(:class="active_classes.color_class") К оплате: $ {{ amount }}</span>
-        div.the-gas-station-calc-body-calc__right
+        div.the-gas-station-calc-body__part-right
             TheGasStationProgressRing(:count_litters="value" :active_classes="active_classes")
 </template>
 
@@ -112,13 +112,13 @@
         }
     }
 
-    .the-gas-station-calc-body-calc {
+    .the-gas-station-calc__body {
         display: flex;
         text-align: left;
         box-sizing: border-box;
         margin-top: 1.25rem;
 
-        .the-gas-station-calc-body-calc__left {
+        .the-gas-station-calc-body__part-left {
             width: 80%;
             margin-left: 2.1875rem;
 

@@ -1,12 +1,11 @@
 <template lang="pug">
     div.the-gas-station-progress-ring
         svg(width="6.25rem" height="6.25rem")
-            circle(stroke="#42505f"
-                    class="the-gas-station-progress-ring-circle"
+            circle.the-gas-station-progress-ring__circle(stroke="#42505f"
                     fill="transparent"
                     :stroke-width="stroke"
                     :r="normalizedRadius")
-            circle.the-gas-station-progress-ring-circle(
+            circle.the-gas-station-progress-ring__circle(
                     ref="progress_ring"
                     stroke="#5D9F23"
                     fill="transparent"
@@ -15,7 +14,7 @@
                     :style="{ strokeDashoffset }"
                     :stroke-width="stroke"
                     :r="normalizedRadius")
-        div.the-gas-station-progress-ring-text-in-circle {{count_litters + 'Л'}}
+        div.the-gas-station-progress-ring__text-in-circle {{count_litters + 'Л'}}
 </template>
 
 <script>
@@ -72,7 +71,7 @@
 </script>
 
 <style lang="scss">
-    .the-gas-station-progress-ring-circle {
+    .the-gas-station-progress-ring__circle {
         transform: rotate(-90deg);
         transform-origin: 2.9375rem 0;
         stroke-linecap: round;
@@ -83,7 +82,7 @@
         width: 6.25rem;
         height: 6.25rem;
 
-        .the-gas-station-progress-ring-text-in-circle {
+        .the-gas-station-progress-ring__text-in-circle {
             position: absolute;
             top: -0.125rem;
             left: -0.1875rem;

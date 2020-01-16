@@ -4,45 +4,45 @@
             :amount="amount"
             :mainWindow="$refs.price_calc"
             ref="modal_window")
-        div#the-gas-station-price-calc.the-gas-station-price-calc(ref="price_calc")
-            div.the-gas-station-price-calc__header
+        div#the-gas-station.the-gas-station(ref="price_calc")
+            div.the-gas-station-header.the-gas-station__header
                 img(src="./assets/logo.png" alt="logo")
-                div.the-gas-station-header-bottom-lines
-                    div.the-gas-station-white-header-line
-                    div.the-gas-station-red-header-line
-                    div.the-gas-station-white-header-line
-            div.the-gas-station-price-calc__content
-                div.the-gas-station-title Выберите тип бензина:
-                div.the-gas-station-petrol-type.the-gas-station-calc-petrol-calc(
+                div.the-gas-station-header__bottom-lines
+                    div.the-gas-station-header__white-line
+                    div.the-gas-station-header__red-line
+                    div.the-gas-station-header__white-line
+            div.the-gas-station__content.the-gas-station-content
+                div.the-gas-station-content__title Выберите тип бензина:
+                div.the-gas-station-content__petrol-type.the-gas-station-calc-petrol-calc(
                     @click="setActive('unleaded')"
                     :class="{'active': active === 'unleaded'}")
-                    div.the-gas-station-petrol-logo
+                    div.the-gas-station-calc-petrol-calc__logo
                         img(src="./assets/fuel-unleaded.svg" alt="")
-                    div.the-gas-station-calc-description
-                        div.the-gas-station-calc-description__title.unleaded Unleaded 87
-                        div.the-gas-station-calc-description__text
+                    div.the-gas-station-description
+                        div.the-gas-station-description__title.unleaded Unleaded 87
+                        div.the-gas-station-description__text
                             | Бензин низкого качества, отсутствуют какие
                             | либо присатки.
                             | Достаточно хороший вариант для среднего класса машин.
-                div.the-gas-station-petrol-type.the-gas-station-calc-petrol-calc(
+                div.the-gas-station-content__petrol-type.the-gas-station-calc-petrol-calc(
                     @click="setActive('performance_plus')"
                     :class="{'active': active === 'performance_plus'}")
-                    div.the-gas-station-petrol-logo
+                    div.the-gas-station-calc-petrol-calc__logo
                         img(src="./assets/fuel-perfomance-plus.svg" alt="")
-                    div.the-gas-station-calc-description
-                        div.the-gas-station-calc-description__title.performance-plus Performance Plus
-                        div.the-gas-station-calc-description__text
+                    div.the-gas-station-description
+                        div.the-gas-station-description__title.performance-plus Performance Plus
+                        div.the-gas-station-description__text
                             | Бензин среднего качества, Добавлена слабая
                             | присадка. Двигатель
                             | становится чуть мощнее, что даёт возможность передвигаться уверенее.
-                div.the-gas-station-petrol-type.the-gas-station-calc-petrol-calc(
+                div.the-gas-station-content__petrol-type.the-gas-station-calc-petrol-calc(
                     @click="setActive('performance_premium')"
                     :class="{'active': active === 'performance_premium'}")
-                    div.the-gas-station-petrol-logo
+                    div.the-gas-station-calc-petrol-calc__logo
                         img(src="./assets/fuel-perfomance-premium.svg" alt="")
-                    div.the-gas-station-calc-description
-                        div.the-gas-station-calc-description__title.performance-premium Performance PREMIUM
-                        div.the-gas-station-calc-description__text
+                    div.the-gas-station-description
+                        div.the-gas-station-description__title.performance-premium Performance PREMIUM
+                        div.the-gas-station-description__text
                             | Бензин высокого качества, есть особый состав
                             | присадки, который
                             | увеличивает мощность двигателя в разы. Минимальный износ двигателя.
@@ -51,7 +51,7 @@
                     :min_liters="20"
                     :active_classes="color_and_background"
                     v-on:setAmount="setAmount")
-            div.the-gas-station-button#proceed(:class="color_and_background.background_class"
+            div.the-gas-station__button#proceed(:class="color_and_background.background_class"
                 @click="proceed") Продолжить
 </template>
 
@@ -225,7 +225,7 @@
         filter: blur(3px);
     }
 
-    .the-gas-station-button {
+    .the-gas-station__button {
         cursor: pointer;
         margin: 0.375rem auto;
         border-radius: 0.9375rem;
@@ -289,30 +289,30 @@
     .the-gas-station-calc-petrol-calc {
         padding: 0.3125rem 0;
 
-        .the-gas-station-calc-description {
+        .the-gas-station-description {
             margin-left: 0.625rem;
             width: 80%;
             text-align: left;
 
-            .the-gas-station-calc-description__title {
+            .the-gas-station-description__title {
                 font-size: 1.125rem;
                 font-weight: bold;
                 margin-top: 0.3125rem;
             }
 
-            .the-gas-station-calc-description__text {
+            .the-gas-station-description__text {
                 font-size: 0.8125rem;
                 line-height: 0.8125rem;
             }
         }
     }
 
-    .the-gas-station-price-calc {
+    .the-gas-station {
         width: 100%;
         height: auto;
         color: $white;
 
-        .the-gas-station-price-calc__header {
+        .the-gas-station-header {
             position: relative;
             background: $bg-header;
             width: 100%;
@@ -331,17 +331,17 @@
                 z-index: 3;
             }
 
-            .the-gas-station-header-bottom-lines {
+            .the-gas-station-header__bottom-lines {
                 position: absolute;
                 width: 100%;
                 bottom: 0;
 
-                .the-gas-station-white-header-line {
+                .the-gas-station-header__white-line {
                     background: $white;
                     height: 0.1875rem;
                 }
 
-                .the-gas-station-red-header-line {
+                .the-gas-station-header__red-line {
                     background: $red;
                     height: 0.5rem;
                 }
@@ -350,7 +350,7 @@
         }
 
 
-        .the-gas-station-price-calc__content {
+        .the-gas-station__content {
             background: $bg-content;
             padding: 3.25rem 1.4375rem 0.3125rem;
             border-bottom-left-radius: 0.625rem;
@@ -361,17 +361,17 @@
                 margin-bottom: 0.375rem;
             }
 
-            .the-gas-station-title {
+            .the-gas-station-content__title {
                 font-size: 1.5rem;
                 color: $white;
                 text-align: left;
             }
 
-            .the-gas-station-petrol-type {
+            .the-gas-station-content__petrol-type {
                 display: flex;
                 cursor: pointer;
 
-                .the-gas-station-petrol-logo {
+                .the-gas-station-calc-petrol-calc__logo {
                     display: flex;
                     align-items: center;
                     justify-content: center;
