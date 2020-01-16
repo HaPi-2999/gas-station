@@ -58,7 +58,6 @@
 <script>
     import TheGasStationCalc from "./components/TheGasStationCalc";
     import TheGasStationModalsWindows from "./components/TheGasStationModalsWindows";
-    import vClickOutside from 'v-click-outside'
 
     const CLASSES = [
         'the-gas-station-bg-unleaded',
@@ -77,9 +76,6 @@
         components: {
             TheGasStationCalc,
             TheGasStationModalsWindows
-        },
-        directives: {
-            clickOutside: vClickOutside.directive
         },
         data() {
             return {
