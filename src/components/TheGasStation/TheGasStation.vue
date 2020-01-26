@@ -15,33 +15,33 @@
                 div.the-gas-station-content__title Выберите тип бензина:
                 div.the-gas-station-content__petrol-type.the-gas-station-calc-petrol-calc(
                     @click="setActive('unleaded')"
-                    :class="{'active': active === 'unleaded'}")
+                    :class="{'the-gas-station-active': active === 'unleaded'}")
                     div.the-gas-station-calc-petrol-calc__logo
                         img(src="./assets/fuel-unleaded.svg" alt="")
                     div.the-gas-station-description
-                        div.the-gas-station-description__title.unleaded Unleaded 87
+                        div.the-gas-station-description__title.the-gas-station-unleaded Unleaded 87
                         div.the-gas-station-description__text
                             | Бензин низкого качества, отсутствуют какие
                             | либо присатки.
                             | Достаточно хороший вариант для среднего класса машин.
                 div.the-gas-station-content__petrol-type.the-gas-station-calc-petrol-calc(
                     @click="setActive('performance_plus')"
-                    :class="{'active': active === 'performance_plus'}")
+                    :class="{'the-gas-station-active': active === 'performance_plus'}")
                     div.the-gas-station-calc-petrol-calc__logo
                         img(src="./assets/fuel-perfomance-plus.svg" alt="")
                     div.the-gas-station-description
-                        div.the-gas-station-description__title.performance-plus Performance Plus
+                        div.the-gas-station-description__title.the-gas-station-performance-plus Performance Plus
                         div.the-gas-station-description__text
                             | Бензин среднего качества, Добавлена слабая
                             | присадка. Двигатель
                             | становится чуть мощнее, что даёт возможность передвигаться уверенее.
                 div.the-gas-station-content__petrol-type.the-gas-station-calc-petrol-calc(
                     @click="setActive('performance_premium')"
-                    :class="{'active': active === 'performance_premium'}")
+                    :class="{'the-gas-station-active': active === 'performance_premium'}")
                     div.the-gas-station-calc-petrol-calc__logo
                         img(src="./assets/fuel-perfomance-premium.svg" alt="")
                     div.the-gas-station-description
-                        div.the-gas-station-description__title.performance-premium Performance PREMIUM
+                        div.the-gas-station-description__title.the-gas-station-performance-premium Performance PREMIUM
                         div.the-gas-station-description__text
                             | Бензин высокого качества, есть особый состав
                             | присадки, который
@@ -52,24 +52,12 @@
                     :active_classes="color_and_background"
                     v-on:setAmount="setAmount")
             div.the-gas-station__button#proceed(:class="color_and_background.background_class"
-                @click="proceed") Продолжить
+                @click="proceed($event)") Продолжить
 </template>
 
 <script>
     import TheGasStationCalc from "./components/TheGasStationCalc";
     import TheGasStationModalsWindows from "./components/TheGasStationModalsWindows";
-
-    const CLASSES = [
-        'the-gas-station-bg-unleaded',
-        'the-gas-station-bg-performance-plus',
-        'the-gas-station-bg-performance-premium'
-    ];
-
-    const SHADOW_CLASSES = [
-        'the-gas-station-bs-unleaded',
-        'the-gas-station-bs-performance-plus',
-        'the-gas-station-bs-performance-premium'
-    ];
 
     export default {
         name: "TheGasStation",
@@ -89,93 +77,48 @@
             setActive(key) {
                 this.active = key;
                 this.color_and_background = this.getColorAndBackground();
-                this.setStyles();
             },
             getColorAndBackground() {
                 switch (this.active) {
                     case 'unleaded':
                         return {
                             title: 'Unleaded 87',
-                            color_class: 'unleaded',
+                            color_class: 'the-gas-station-unleaded',
                             stroke_color: 'the-gas-station-stroke-unleaded',
                             background_class: 'the-gas-station-bg-unleaded',
-                            box_shadow_class: 'the-gas-station-bs-unleaded',
-                            price_per_liter: 13
+                            price_per_liter: 13,
+                            slider: 'the-gas-station-range-slider-unleaded'
                         };
                     case 'performance_plus':
                         return {
                             title: 'Performance Plus',
-                            color_class: 'performance-plus',
+                            color_class: 'the-gas-station-performance-plus',
                             stroke_color: 'the-gas-station-stroke-performance-plus',
                             background_class: 'the-gas-station-bg-performance-plus',
-                            box_shadow_class: 'the-gas-station-bs-performance-plus',
-                            price_per_liter: 16.3
-
+                            price_per_liter: 16.3,
+                            slider: 'the-gas-station-range-slider-performance-plus'
                         };
                     case 'performance_premium':
                         return {
                             title: 'Performance PREMIUM',
-                            color_class: 'performance-premium',
+                            color_class: 'the-gas-station-performance-premium',
                             stroke_color: 'the-gas-station-stroke-performance-premium',
                             background_class: 'the-gas-station-bg-performance-premium',
-                            box_shadow_class: 'the-gas-station-bs-performance-premium',
-                            price_per_liter: 21
+                            price_per_liter: 21,
+                            slider: 'the-gas-station-range-slider-performance-premium'
                         };
                 }
 
                 return {}
             },
-            setStyles() {
-                this.setSliderClasses();
-            },
-            setSliderClasses() {
-                const SLIDER_CLASSES = [
-                    'range-slider-fill',
-                    'range-slider-knob'
-                ];
+            proceed(event) {
+                event.stopPropagation();
 
-                //Slider_class => sl_cl
-                SLIDER_CLASSES.forEach(sl_cl => {
-                    let item = document.getElementsByClassName(sl_cl)[0];
-
-                    CLASSES.forEach(cl => {
-                        if (item.classList.contains(cl)) {
-                            item.classList.remove(cl);
-                        }
-                    });
-
-                    SHADOW_CLASSES.forEach(cl => {
-                        if (item.classList.contains(cl)) {
-                            item.classList.remove(cl);
-                        }
-                    });
-
-                    item.classList.add(this.color_and_background.background_class);
-                    item.classList.add(this.color_and_background.box_shadow_class);
-                });
-            },
-            outsideClickListener(modal, mainWindow, _self) {
-                return function () {
-                    if (mainWindow.classList.contains('the-gas-station-blur')) {
-                        mainWindow.classList.remove('the-gas-station-blur');
-                        modal.classList.remove('the-gas-station-modal-active');
-                        document.removeEventListener('click', _self.outsideClickListener);
-                    }
-                }
-            },
-            proceed() {
                 let modal = this.$refs.modal_window.getData().modal_window,
-                    mainWindow = this.$refs.price_calc,
-                    _self = this,
-                    promise = new Promise(function (resolve) {
-                        setTimeout(function () {
-                            resolve(document.addEventListener('click', _self.outsideClickListener(modal, mainWindow, _self)))
-                        }, 1)
-                    });
-                promise.then(function () {
-                    mainWindow.classList.add('the-gas-station-blur');
-                    modal.classList.add('the-gas-station-modal-active');
-                });
+                    mainWindow = this.$refs.price_calc;
+
+                mainWindow.classList.add('the-gas-station-blur');
+                modal.classList.add('the-gas-station-modal-active');
             },
 
             setAmount(amount) {
@@ -185,7 +128,6 @@
 
         mounted() {
             this.color_and_background = this.getColorAndBackground();
-            this.setStyles();
         }
     }
 </script>
@@ -209,12 +151,8 @@
         font-family: Gilroy, serif;
     }
 
-    .modal-active {
-        background: red;
-        z-index: 99;
-    }
 
-    .active {
+    .the-gas-station-active {
         background: linear-gradient(90deg, rgba(45, 60, 77, 1) 0%, rgba(255, 255, 255, 0) 100%);
         border-radius: 0.625rem;
         padding-left: 0.3125rem !important;
@@ -237,7 +175,7 @@
         font-weight: bold;
     }
 
-    .unleaded {
+    .the-gas-station-unleaded {
         color: $unleaded;
     }
 
@@ -249,11 +187,14 @@
         stroke: $unleaded;
     }
 
-    .the-gas-station-bs-unleaded {
-        box-shadow: 0 0 7px 2px rgba(235, 15, 15, 0.66);
+    .the-gas-station-range-slider-unleaded {
+        .range-slider-fill, .range-slider-knob {
+            background: $unleaded !important;
+            box-shadow: 0 0 7px 2px rgba(235, 15, 15, 0.66);
+        }
     }
 
-    .performance-plus {
+    .the-gas-station-performance-plus {
         color: $performance-plus;
     }
 
@@ -261,15 +202,18 @@
         background: $performance-plus !important;
     }
 
-    .the-gas-station-bs-performance-plus {
-        box-shadow: 0 0 7px 2px rgba(82, 200, 229, 0.66);
+    .the-gas-station-range-slider-performance-plus {
+        .range-slider-fill, .range-slider-knob {
+            background: $performance-plus !important;
+            box-shadow: 0 0 7px 2px rgba(82, 200, 229, 0.66);
+        }
     }
 
     .the-gas-station-stroke-performance-plus {
         stroke: $performance-plus;
     }
 
-    .performance-premium {
+    .the-gas-station-performance-premium {
         color: $performance-premium;
     }
 
@@ -277,8 +221,11 @@
         background: $performance-premium !important;
     }
 
-    .the-gas-station-bs-performance-premium {
-        box-shadow: 0 0 7px 2px rgba(183, 237, 81, 0.66);
+    .the-gas-station-range-slider-performance-premium {
+        .range-slider-fill, .range-slider-knob {
+            background: $performance-premium !important;
+            box-shadow: 0 0 7px 2px rgba(183, 237, 81, 0.66);
+        }
     }
 
     .the-gas-station-stroke-performance-premium {

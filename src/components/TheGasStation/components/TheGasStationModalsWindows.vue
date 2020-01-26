@@ -1,13 +1,16 @@
 <template lang="pug">
-    div#the-gas-station-modals-windows-modal-window(@click="setStopPropagation($event)" ref="modal_window")
+    div#the-gas-station-modals-windows-modal-window(
+        ref="modal_window"
+        v-click-outside="closeModal"
+    )
         input(type="text" v-model="money")
         div.the-gas-station-modals-windows-modal-window__header ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ:
         div.the-gas-station-modals-windows-modal-window__content(v-if="competition.type_payment")
             div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows__btn-cash
-                #btn-cash(@click="setActiveContent") НАЛИЧНЫЙ РАСЧЁТ
+                #btn-cash(@click="setActiveContent($event)") НАЛИЧНЫЙ РАСЧЁТ
             div.the-gas-station-modals-windows-modal-window__button.the-gas-station-modals-windows__btn-bank-card
                 #btn-bank-card(
-                    @click="setActiveContent") БАНКОВСКАЯ КАРТА
+                    @click="setActiveContent($event)") БАНКОВСКАЯ КАРТА
         div.the-gas-station-modals-windows-modal-window__content(v-if="competition.success")
             img(src="../assets/payment-success.png" alt="")
             p.the-gas-station-modals-windows__text-success Транзакция прошла успешно.
@@ -22,13 +25,22 @@
 
 <script>
 
+    import vClickOutside from 'v-click-outside'
+
     export default {
         name: "TheGasStationTypePayment",
+        directives: {
+            clickOutside: vClickOutside.directive
+        },
         props: {
             mainWindow: null,
             amount: {
                 default: 0,
                 type: Number
+            },
+            firstStart: {
+                default: false,
+                type: Boolean
             }
         },
         data() {
@@ -42,11 +54,16 @@
             }
         },
         methods: {
-            setStopPropagation(event) {
+            setActiveContent(event) {
                 event.stopPropagation();
-            },
-            setActiveContent() {
                 this.isEnoughMoney();
+            },
+            closeModal() {
+                let modal = this.$refs.modal_window,
+                    mainWindow = this.mainWindow;
+
+                mainWindow.classList.remove('the-gas-station-blur');
+                modal.classList.remove('the-gas-station-modal-active');
             },
             isEnoughMoney() {
                 this.closeAllModal();
@@ -69,7 +86,7 @@
                     this.competition[el] = false;
                 }
             },
-        }
+        },
     }
 </script>
 

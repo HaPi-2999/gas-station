@@ -8,7 +8,9 @@
                     | Выберите количество литров для заправки. Исользуйте ползунок, после нажмите
                     span(:class="active_classes.color_class")  продолжить
                     | , чтобы перейти к оплате.
+
             range-slider.the-gas-station-calc-slider(
+                :class="this.active_classes.slider"
                 :min="min_liters"
                 :max="max_liters"
                 step="1"
@@ -39,11 +41,13 @@
             min_liters: {
                 default: 20,
                 type: Number
-            }
+            },
+
         },
         data() {
             return {
                 value: 0,
+                slider_style: null
             }
         },
         computed: {
