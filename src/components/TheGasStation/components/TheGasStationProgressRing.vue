@@ -6,7 +6,7 @@
                     :stroke-width="stroke"
                     :r="normalizedRadius")
             circle.the-gas-station-progress-ring__circle(
-                    ref="progress_ring"
+                    :class="active_classes.stroke"
                     stroke="#5D9F23"
                     fill="transparent"
                     :stroke-dasharray="circumference + ' ' + circumference"
@@ -43,30 +43,6 @@
                 return this.circumference - progress / 100 * this.circumference;
             },
         },
-        watch: {
-          active_classes() {
-              this.setSpinnerClasses();
-          }
-        },
-        methods: {
-            setSpinnerClasses() {
-                const SPINNER_CLASSES = [
-                    'the-gas-station-stroke-unleaded',
-                    'the-gas-station-stroke-performance-plus',
-                    'the-gas-station-stroke-performance-premium'
-                ];
-
-                let spinner_item = this.$refs.progress_ring;
-
-                SPINNER_CLASSES.forEach(cl => {
-                    if (spinner_item.classList.contains(cl)) {
-                        spinner_item.classList.remove(cl);
-                    }
-                });
-
-                spinner_item.classList.add(this.active_classes.stroke_color);
-            },
-        }
     }
 </script>
 

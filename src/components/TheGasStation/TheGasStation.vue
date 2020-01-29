@@ -2,9 +2,15 @@
     div
         TheGasStationModalsWindows(
             :amount="amount"
-            :mainWindow="$refs.price_calc"
-            ref="modal_window")
-        div#the-gas-station.the-gas-station(ref="price_calc")
+            :active_modal="active_modal"
+            :proceedButton="$refs.proceed"
+            ref="modal_window"
+            @closeModal="closeModal"
+        )
+        div#the-gas-station.the-gas-station(
+            :class="{'the-gas-station-blur': active_modal}"
+            @closeModal="closeModal"
+        )
             div.the-gas-station-header.the-gas-station__header
                 img(src="./assets/logo.png" alt="logo")
                 div.the-gas-station-header__bottom-lines
@@ -52,7 +58,7 @@
                     :active_classes="color_and_background"
                     v-on:setAmount="setAmount")
             div.the-gas-station__button#proceed(:class="color_and_background.background_class"
-                @click="proceed($event)") Продолжить
+                @click="proceed" ref="proceed") Продолжить
 </template>
 
 <script>
@@ -70,13 +76,17 @@
                 active: 'unleaded',
                 show_modals_window: false,
                 color_and_background: {},
-                amount: 2
+                amount: 2,
+                active_modal: false
             }
         },
         methods: {
             setActive(key) {
                 this.active = key;
                 this.color_and_background = this.getColorAndBackground();
+            },
+            closeModal() {
+                this.active_modal = false;
             },
             getColorAndBackground() {
                 switch (this.active) {
@@ -87,7 +97,8 @@
                             stroke_color: 'the-gas-station-stroke-unleaded',
                             background_class: 'the-gas-station-bg-unleaded',
                             price_per_liter: 13,
-                            slider: 'the-gas-station-range-slider-unleaded'
+                            slider: 'the-gas-station-range-slider-unleaded',
+                            stroke: 'the-gas-station-stroke-unleaded'
                         };
                     case 'performance_plus':
                         return {
@@ -96,7 +107,8 @@
                             stroke_color: 'the-gas-station-stroke-performance-plus',
                             background_class: 'the-gas-station-bg-performance-plus',
                             price_per_liter: 16.3,
-                            slider: 'the-gas-station-range-slider-performance-plus'
+                            slider: 'the-gas-station-range-slider-performance-plus',
+                            stroke: 'the-gas-station-stroke-performance-plus'
                         };
                     case 'performance_premium':
                         return {
@@ -105,22 +117,16 @@
                             stroke_color: 'the-gas-station-stroke-performance-premium',
                             background_class: 'the-gas-station-bg-performance-premium',
                             price_per_liter: 21,
-                            slider: 'the-gas-station-range-slider-performance-premium'
+                            slider: 'the-gas-station-range-slider-performance-premium',
+                            stroke: 'the-gas-station-stroke-performance-premium'
                         };
                 }
 
                 return {}
             },
-            proceed(event) {
-                event.stopPropagation();
-
-                let modal = this.$refs.modal_window.getData().modal_window,
-                    mainWindow = this.$refs.price_calc;
-
-                mainWindow.classList.add('the-gas-station-blur');
-                modal.classList.add('the-gas-station-modal-active');
+            proceed() {
+                this.active_modal = true;
             },
-
             setAmount(amount) {
                 this.amount = amount;
             }
