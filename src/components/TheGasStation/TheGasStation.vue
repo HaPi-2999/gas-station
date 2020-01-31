@@ -5,11 +5,10 @@
             :active_modal="active_modal"
             :proceedButton="$refs.proceed"
             ref="modal_window"
-            @closeModal="closeModal"
+            @close-modal="closeModal"
         )
         div#the-gas-station.the-gas-station(
             :class="{'the-gas-station-blur': active_modal}"
-            @closeModal="closeModal"
         )
             div.the-gas-station-header.the-gas-station__header
                 img(src="./assets/logo.png" alt="logo")

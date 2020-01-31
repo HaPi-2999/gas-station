@@ -41,7 +41,6 @@
             active_modal: {
                 type: Boolean
             },
-            closeModal: Function
         },
         data() {
             return {
@@ -66,7 +65,7 @@
                 return event.target !== this.proceedButton;
             },
             mClose() {
-                this.$emit('closeModal');
+                this.$emit('close-modal');
             },
             isEnoughMoney() {
                 this.closeAllModal();
